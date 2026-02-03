@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>📝 My To-Do List</h1>
+
+        <!-- Input section -->
+        <div class="input-section">
+            <input type="text" id="task-input" placeholder="Enter a new task...">
+
+            <!-- Priority selection -->
+            <div class="priority-section">
+                <label>
+                    <input type="radio" name="priority" value="regular" id="regular-radio" checked>
+                    Regular
+                </label>
+                <label>
+                    <input type="radio" name="priority" value="urgent" id="urgent-radio">
+                    Urgent
+                </label>
+            </div>
+
+            <!-- Category input (for regular tasks) -->
+            <div id="category-input-container" class="extra-input">
+                <input type="text" id="category-input" placeholder="Category (e.g., Work, Personal)">
+            </div>
+
+            <!-- Deadline input (for urgent tasks) -->
+            <div id="deadline-input-container" class="extra-input hidden">
+                <input type="text" id="deadline-input" placeholder="Deadline (e.g., Feb 5)">
+            </div>
+
+            <button id="add-button">Add Task</button>
+        </div>
+    </div>
+
+    <!-- Task list display -->
+    <div class="task-list-section">
+        <h2>Tasks:</h2>
+
+        <ul id="task-list">
+            <!-- Tasks will be added here by JavaScript -->
+        </ul>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

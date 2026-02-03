@@ -1,0 +1,168 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+h2 {
+    color: #555;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+/* Input section styling */
+.input-section {
+    margin-bottom: 30px;
+}
+
+#task-input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+#task-input:focus {
+    outline: none;
+    border-color: #4CAF50;
+}
+
+.priority-section {
+    margin-bottom: 15px;
+}
+
+.priority-section label {
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.extra-input {
+    margin-bottom: 15px;
+}
+
+.extra-input input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+#add-button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#add-button:hover {
+    background-color: #45a049;
+}
+
+/* Task list styling */
+#task-list {
+    list-style: none;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 2px solid #ddd;
+    transition: all 0.3s;
+}
+
+/* CSS Requirement 1: Different background colors for task types */
+.task-item.regular {
+    background-color: #e8f5e9;
+    border-color: #81c784;
+}
+
+.task-item.urgent {
+    background-color: #ffebee;
+    border-color: #e57373;
+}
+
+.task-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.task-checkbox {
+    margin-right: 15px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.task-text {
+    font-size: 16px;
+    color: #333;
+}
+
+/* CSS Requirement 2: Completed tasks have line-through and lower opacity */
+.task-item.completed .task-text {
+    text-decoration: line-through;
+    opacity: 0.6;
+    color: #999;
+}
+
+.delete-button {
+    padding: 8px 15px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.delete-button:hover {
+    background-color: #da190b;
+}
+
+/* Empty state message */
+.empty-message {
+    text-align: center;
+    color: #999;
+    padding: 40px;
+    font-style: italic;
+}
