@@ -1,3 +1,6 @@
+// Project idea came from Youtube video: How To Create To-Do List App Using HTML CSS And JavaScript | Task App In JavaScript
+// https://www.youtube.com/watch?v=G0jO8kUrg-I
+
 // CLASS
 // Parent class: Task
 class Task {
@@ -90,7 +93,7 @@ class TodoList {
 
     // Method 4: Render all tasks to the page
     render() {
-        const container = document.getElementById('task-list');
+        const container = taskListContainer;  // Use the querySelector variable
         container.innerHTML = '';  // Clear existing tasks
 
         // If no tasks, show empty message
@@ -102,9 +105,14 @@ class TodoList {
             return;
         }
 
-        // Loop through all tasks and create elements
+        // Store reference to 'this' (the TodoList instance)
+        // Needed because 'this' changes inside event listener functions
+        const self = this;
+
+        // Loop through all tasks
         for (let i = 0; i < this.tasks.length; i++) {
             const task = this.tasks[i];
+            const currentIndex = i;
 
             // Create list item
             const li = document.createElement('li');
@@ -122,7 +130,11 @@ class TodoList {
             checkbox.type = 'checkbox';
             checkbox.className = 'task-checkbox';
             checkbox.checked = task.completed;
-            checkbox.dataset.index = i;  // Store index for later use
+
+            // Add event listener directly to checkbox
+            checkbox.addEventListener('click', function () {
+                self.toggleTask(currentIndex);
+            });
 
             // Create task text span
             const textSpan = document.createElement('span');
@@ -137,7 +149,11 @@ class TodoList {
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'delete-button';
             deleteBtn.textContent = 'Delete';
-            deleteBtn.dataset.index = i;  // Store index for later use
+
+            // Add event listener directly to delete button
+            deleteBtn.addEventListener('click', function () {
+                self.deleteTask(currentIndex);
+            });
 
             // Append content and delete button to list item
             li.appendChild(contentDiv);
@@ -152,19 +168,22 @@ class TodoList {
 // Create new TodoList instance
 const myTodoList = new TodoList();
 
-// Use getElementById
+// Method 1: use getElementById to select input fields and containers
 const taskInput = document.getElementById('task-input');
 const addButton = document.getElementById('add-button');
 const categoryInput = document.getElementById('category-input');
 const deadlineInput = document.getElementById('deadline-input');
-
-// Use querySelector
-const regularRadio = document.querySelector('#regular-radio');
-const urgentRadio = document.querySelector('#urgent-radio');
-
-// Use getElementById for containers
 const categoryContainer = document.getElementById('category-input-container');
 const deadlineContainer = document.getElementById('deadline-input-container');
+
+// Method 2: use querySelectorAll to select all priority radio buttons
+const priorityRadios = document.querySelectorAll('input[name="priority"]');
+const regularRadio = priorityRadios[0];  // First radio button (Regular)
+const urgentRadio = priorityRadios[1];   // Second radio button (Urgent)
+
+// Method 3: use querySelector to select the task list container
+// As alternative way to select an element by ID
+const taskListContainer = document.querySelector('#task-list');
 
 // EVENT LISTENERS
 // Event 1: Toggle between showing category or deadline input based on priority selection
@@ -179,10 +198,9 @@ urgentRadio.addEventListener('change', function () {
 });
 
 // Event 2: Add task when button is clicked (DOM update + event object usage)
-addButton.addEventListener('click', function (evt) {
-    // Use event object to prevent default form submission (if in a form)
-    evt.preventDefault();
-
+addButton.addEventListener('click', function () {
+    // Removes all whitespace (spaces, tabs, newlines) from the beginning and end of a string
+    // Learn from MDN https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim
     const taskText = taskInput.value.trim();
 
     // Validate input
@@ -191,7 +209,7 @@ addButton.addEventListener('click', function (evt) {
         return;
     }
 
-    // Create appropriate task type based on priority selection
+    // Create task based on selected priority
     let newTask;
     if (regularRadio.checked) {
         const category = categoryInput.value.trim();
@@ -210,34 +228,15 @@ addButton.addEventListener('click', function (evt) {
     deadlineInput.value = '';
 
     // Focus back on task input
+    // Learn this cute move from Youtube video: How To Set Focus With JavaScript
+    // https://www.youtube.com/watch?v=TP-v0pW1c0E
     taskInput.focus();
 });
 
-// Event 3: Handle checkbox and delete button clicks using event delegation
-// Use querySelectorAll to get the task list container
-document.getElementById('task-list').addEventListener('click', function (evt) {
-    // Use evt.target to determine what was clicked
-    const target = evt.target;
-
-    // If checkbox was clicked
-    if (target.className === 'task-checkbox') {
-        const index = parseInt(target.dataset.index);
-        myTodoList.toggleTask(index);
-    }
-
-    // If delete button was clicked
-    if (target.className === 'delete-button') {
-        const index = parseInt(target.dataset.index);
-        myTodoList.deleteTask(index);
-    }
-});
-
-// Event 4: Allow adding task by pressing Enter key
+// Allow adding task by pressing Enter key
 taskInput.addEventListener('keypress', function (evt) {
-    // Use event object to check which key was pressed
     if (evt.key === 'Enter') {
-        evt.preventDefault();
-        addButton.click();  // Trigger the add button click
+        addButton.click();
     }
 });
 
